@@ -8,6 +8,8 @@ use App\Http\Controllers\SalesController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\ReportController;
+
     
 
 /*
@@ -24,6 +26,7 @@ use App\Http\Controllers\BankController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 
 // Customer & Vendor
 Route::apiResource('customers', CustomerController::class);
@@ -54,3 +57,7 @@ Route::get('bank/transactions', [BankController::class, 'transactionsIndex']);
 Route::post('bank/transactions', [BankController::class, 'transactionsStore']);
 Route::put('bank/transactions/{id}', [BankController::class, 'transactionsUpdate']);
 Route::delete('bank/transactions/{id}', [BankController::class, 'transactionsDelete']);
+
+// Reports
+Route::get('reports/ar-aging', [ReportController::class, 'arAging']);
+Route::get('reports/ap-aging', [ReportController::class, 'apAging']);
