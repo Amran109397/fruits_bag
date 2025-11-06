@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality Control - Fruits Bag</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="bi bi-basket"></i> Fruits Bag</h3>
+        </div>
+        <div class="sidebar-content">
+            <ul class="nav flex-column">
+                <!-- Dashboard -->
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                </li>
+    
+                <!-- Core Accounting -->
+                <li class="nav-item">
+                    <a class="nav-link" href="core.html">
+                        <i class="bi bi-gear"></i> Core Accounting
+                    </a>
+                </li>
+    
+                <!-- Inventory Management -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-box-seam"></i> Inventory
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="products.html">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="warehouses.html">Warehouses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="stock_levels.html">Stock Levels</a>
+                        </li>
+                    </ul>
+                </li>
+    
+                <!-- Import Management -->
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">
+                        <i class="bi bi-globe"></i> Import
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="purchase_orders.html">Purchase Orders</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shipments.html">Shipments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="quality_control.html">Quality Control</a>
+                        </li>
+                    </ul>
+                </li>
+    
+                <!-- Accounts Receivable -->
+                <li class="nav-item">
+                    <a class="nav-link" href="receivable.html">
+                        <i class="bi bi-cash-coin"></i> Accounts Receivable
+                    </a>
+                </li>
+    
+                <!-- Accounts Payable -->
+                <li class="nav-item">
+                    <a class="nav-link" href="payable.html">
+                        <i class="bi bi-credit-card"></i> Accounts Payable
+                    </a>
+                </li>
+    
+                <!-- Tax Management -->
+                <li class="nav-item">
+                    <a class="nav-link" href="tax.html">
+                        <i class="bi bi-receipt"></i> Tax Management
+                    </a>
+                </li>
+    
+                <!-- Bank Reconciliation -->
+                <li class="nav-item">
+                    <a class="nav-link" href="bank.html">
+                        <i class="bi bi-bank"></i> Bank Reconciliation
+                    </a>
+                </li>
+    
+                <!-- Fixed Assets -->
+                <li class="nav-item">
+                    <a class="nav-link" href="assets.html">
+                        <i class="bi bi-building"></i> Fixed Assets
+                    </a>
+                </li>
+    
+                <!-- Budgeting -->
+                <li class="nav-item">
+                    <a class="nav-link" href="budget.html">
+                        <i class="bi bi-graph-up"></i> Budgeting
+                    </a>
+                </li>
+    
+                <!-- Document Management -->
+                <li class="nav-item">
+                    <a class="nav-link" href="documents.html">
+                        <i class="bi bi-file-earmark-text"></i> Documents
+                    </a>
+                </li>
+    
+                <!-- Audit & Security -->
+                <li class="nav-item">
+                    <a class="nav-link" href="audit.html">
+                        <i class="bi bi-shield-check"></i> Audit & Security
+                    </a>
+                </li>
+    
+                <!-- Cash Management -->
+                <li class="nav-item">
+                    <a class="nav-link" href="cash.html">
+                        <i class="bi bi-safe"></i> Cash Management
+                    </a>
+                </li>
+    
+                <!-- Fiscal Management -->
+                <li class="nav-item">
+                    <a class="nav-link" href="fiscal.html">
+                        <i class="bi bi-calendar-range"></i> Fiscal Management
+                    </a>
+                </li>
+    
+                <!-- Reports -->
+                <li class="nav-item">
+                    <a class="nav-link" href="reports.html">
+                        <i class="bi bi-file-earmark-bar-graph"></i> Reports
+                    </a>
+                </li>
+    
+                <!-- Settings -->
+                <li class="nav-item">
+                    <a class="nav-link" href="settings.html">
+                        <i class="bi bi-gear"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <span class="navbar-brand">Quality Control</span>
+                <div class="ms-auto">
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown"
+                            data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> Admin User
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid p-4">
+            <div class="row mb-4">
+                <div class="col-12 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h1 class="h3">Quality Control</h1>
+                        <p class="text-muted">Manage fruit quality inspections</p>
+                    </div>
+                    <button class="btn btn-primary"><i class="bi bi-plus-circle"></i> Schedule Inspection</button>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pending
+                                        Inspections</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">8</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="bi bi-clipboard-data fs-2 text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Pass Rate
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">94%</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="bi bi-check-circle fs-2 text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Failed This
+                                        Month</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">3</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="bi bi-x-circle fs-2 text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Avg. Score</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">8.7/10</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="bi bi-star fs-2 text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Quality Inspections</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Inspection #</th>
+                                    <th>Product</th>
+                                    <th>Batch #</th>
+                                    <th>Inspection Date</th>
+                                    <th>Inspector</th>
+                                    <th>Score</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>QC-2023-045</td>
+                                    <td>Apple - Red Delicious</td>
+                                    <td>APL-0523</td>
+                                    <td>2023-05-15</td>
+                                    <td>John Doe</td>
+                                    <td><span class="badge bg-success">9.2/10</span></td>
+                                    <td><span class="badge bg-success">Passed</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary"><i class="bi bi-eye"></i></button>
+                                        <button class="btn btn-sm btn-success"><i class="bi bi-download"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>QC-2023-044</td>
+                                    <td>Banana - Cavendish</td>
+                                    <td>BAN-0523</td>
+                                    <td>2023-05-14</td>
+                                    <td>Jane Smith</td>
+                                    <td><span class="badge bg-warning">7.5/10</span></td>
+                                    <td><span class="badge bg-warning">Conditional</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary"><i class="bi bi-eye"></i></button>
+                                        <button class="btn btn-sm btn-warning"><i
+                                                class="bi bi-exclamation-triangle"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>QC-2023-043</td>
+                                    <td>Strawberry - Fresh</td>
+                                    <td>STR-0523</td>
+                                    <td>2023-05-13</td>
+                                    <td>Robert Johnson</td>
+                                    <td><span class="badge bg-danger">5.8/10</span></td>
+                                    <td><span class="badge bg-danger">Failed</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary"><i class="bi bi-eye"></i></button>
+                                        <button class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>QC-2023-042</td>
+                                    <td>Mango - Alphonso</td>
+                                    <td>MNG-0523</td>
+                                    <td>2023-05-12</td>
+                                    <td>Maria Garcia</td>
+                                    <td><span class="badge bg-success">9.5/10</span></td>
+                                    <td><span class="badge bg-success">Passed</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary"><i class="bi bi-eye"></i></button>
+                                        <button class="btn btn-sm btn-success"><i class="bi bi-download"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>

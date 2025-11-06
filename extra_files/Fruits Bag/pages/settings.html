@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Fruits Bag</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .settings-sidebar {
+            background: #f8f9fc;
+            border-radius: 0.35rem;
+            padding: 1rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .settings-option {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0.35rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            border: 1px solid transparent;
+        }
+
+        .settings-option:hover {
+            background-color: #e3e6f0;
+            border-color: #ddd;
+        }
+
+        .settings-option.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .settings-option i {
+            margin-right: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .settings-content {
+            background: white;
+            border-radius: 0.35rem;
+            padding: 2rem;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        }
+
+        .settings-section {
+            display: none;
+        }
+
+        .settings-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .form-floating label {
+            color: var(--dark-color);
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #2e59d9;
+            border-color: #2653d4;
+        }
+
+        .settings-header {
+            border-bottom: 1px solid #e3e6f0;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .settings-header h2 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-header p {
+            color: #858796;
+            margin-bottom: 0;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .form-check-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+        }
+
+        .user-table {
+            margin-top: 1.5rem;
+        }
+
+        .badge {
+            font-size: 0.75em;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="bi bi-basket"></i> Fruits Bag</h3>
+        </div>
+        <div class="sidebar-content">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="core.html">
+                        <i class="bi bi-gear"></i> Core Accounting
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-box-seam"></i> Inventory
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="products.html">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="warehouses.html">Warehouses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="stock_levels.html">Stock Levels</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-globe"></i> Import
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="purchase_orders.html">Purchase Orders</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shipments.html">Shipments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="quality_control.html">Quality Control</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="receivable.html">
+                        <i class="bi bi-cash-coin"></i> Accounts Receivable
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="payable.html">
+                        <i class="bi bi-credit-card"></i> Accounts Payable
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="tax.html">
+                        <i class="bi bi-receipt"></i> Tax Management
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="bank.html">
+                        <i class="bi bi-bank"></i> Bank Reconciliation
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="assets.html">
+                        <i class="bi bi-building"></i> Fixed Assets
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="budget.html">
+                        <i class="bi bi-graph-up"></i> Budgeting
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="documents.html">
+                        <i class="bi bi-file-earmark-text"></i> Documents
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="audit.html">
+                        <i class="bi bi-shield-check"></i> Audit & Security
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="cash.html">
+                        <i class="bi bi-safe"></i> Cash Management
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="fiscal.html">
+                        <i class="bi bi-calendar-range"></i> Fiscal Management
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="reports.html">
+                        <i class="bi bi-file-earmark-bar-graph"></i> Reports
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="settings.html">
+                        <i class="bi bi-gear"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <span class="navbar-brand">Settings</span>
+                <div class="ms-auto">
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown"
+                            data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> Admin User
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid p-4">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h1 class="h3">System Settings</h1>
+                    <p class="text-muted">Configure Fruits Bag accounting system</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 mb-4">
+                    <div class="settings-sidebar">
+                        <div class="settings-option active" data-section="general">
+                            <i class="bi bi-gear"></i>
+                            <span>General</span>
+                        </div>
+                        <div class="settings-option" data-section="company">
+                            <i class="bi bi-building"></i>
+                            <span>Company</span>
+                        </div>
+                        <div class="settings-option" data-section="users">
+                            <i class="bi bi-people"></i>
+                            <span>Users</span>
+                        </div>
+                        <div class="settings-option" data-section="security">
+                            <i class="bi bi-shield-lock"></i>
+                            <span>Security</span>
+                        </div>
+                        <div class="settings-option" data-section="notifications">
+                            <i class="bi bi-bell"></i>
+                            <span>Notifications</span>
+                        </div>
+                        <div class="settings-option" data-section="integrations">
+                            <i class="bi bi-plug"></i>
+                            <span>Integrations</span>
+                        </div>
+                        <div class="settings-option" data-section="backup">
+                            <i class="bi bi-cloud-arrow-up"></i>
+                            <span>Backup</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9">
+                    <div class="settings-content">
+                        <!-- General Settings -->
+                        <div class="settings-section active" id="general">
+                            <div class="settings-header">
+                                <h2>General Settings</h2>
+                                <p>Configure basic application settings</p>
+                            </div>
+
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="appName" value="Fruits Bag"
+                                                placeholder="Application Name">
+                                            <label for="appName">Application Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="timezone">
+                                                <option selected>Asia/Dhaka</option>
+                                                <option>UTC</option>
+                                                <option>Asia/Kolkata</option>
+                                                <option>Asia/Singapore</option>
+                                            </select>
+                                            <label for="timezone">Timezone</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="currency">
+                                                <option selected>USD ($)</option>
+                                                <option>EUR (€)</option>
+                                                <option>GBP (£)</option>
+                                                <option>BDT (৳)</option>
+                                            </select>
+                                            <label for="currency">Currency</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="dateFormat">
+                                                <option selected>YYYY-MM-DD</option>
+                                                <option>DD/MM/YYYY</option>
+                                                <option>MM/DD/YYYY</option>
+                                            </select>
+                                            <label for="dateFormat">Date Format</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="autoBackup" checked>
+                                    <label class="form-check-label" for="autoBackup">
+                                        Enable automatic backup
+                                    </label>
+                                </div>
+
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="darkMode">
+                                    <label class="form-check-label" for="darkMode">
+                                        Enable dark mode
+                                    </label>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle"></i> Save Changes
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Company Information -->
+                        <div class="settings-section" id="company">
+                            <div class="settings-header">
+                                <h2>Company Information</h2>
+                                <p>Manage your company details</p>
+                            </div>
+
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-8 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="companyName"
+                                                value="Fruits Bag Ltd." placeholder="Company Name">
+                                            <label for="companyName">Company Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="taxId" value="TX123456789"
+                                                placeholder="Tax ID">
+                                            <label for="taxId">Tax ID</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" id="address" style="height: 100px"
+                                            placeholder="Address">123 Fruit Street, Dhaka, Bangladesh</textarea>
+                                        <label for="address">Address</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="tel" class="form-control" id="phone" value="+880 1234 567890"
+                                                placeholder="Phone">
+                                            <label for="phone">Phone</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="email"
+                                                value="info@fruitsbag.com" placeholder="Email">
+                                            <label for="email">Email</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="url" class="form-control" id="website"
+                                                value="https://fruitsbag.com" placeholder="Website">
+                                            <label for="website">Website</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="industry"
+                                                value="Food & Beverage" placeholder="Industry">
+                                            <label for="industry">Industry</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle"></i> Save Changes
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Users Management -->
+                        <div class="settings-section" id="users">
+                            <div class="settings-header d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h2>Users Management</h2>
+                                    <p>Manage system users and permissions</p>
+                                </div>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                                    <i class="bi bi-plus-circle"></i> Add User
+                                </button>
+                            </div>
+
+                            <div class="table-responsive user-table">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Status</th>
+                                            <th>Last Login</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar me-2">
+                                                        <i class="bi bi-person-circle fs-4 text-primary"></i>
+                                                    </div>
+                                                    <div>John Doe</div>
+                                                </div>
+                                            </td>
+                                            <td>john@fruitsbag.com</td>
+                                            <td><span class="badge bg-primary">Admin</span></td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                            <td>2023-05-15 14:30</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#editUserModal">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar me-2">
+                                                        <i class="bi bi-person-circle fs-4 text-success"></i>
+                                                    </div>
+                                                    <div>Jane Smith</div>
+                                                </div>
+                                            </td>
+                                            <td>jane@fruitsbag.com</td>
+                                            <td><span class="badge bg-info">Accountant</span></td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                            <td>2023-05-15 10:15</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#editUserModal">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="avatar me-2">
+                                                        <i class="bi bi-person-circle fs-4 text-warning"></i>
+                                                    </div>
+                                                    <div>Robert Johnson</div>
+                                                </div>
+                                            </td>
+                                            <td>robert@fruitsbag.com</td>
+                                            <td><span class="badge bg-warning">Manager</span></td>
+                                            <td><span class="badge bg-secondary">Inactive</span></td>
+                                            <td>2023-05-10 16:45</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#editUserModal">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-success">
+                                                    <i class="bi bi-check-circle"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Security Settings -->
+                        <div class="settings-section" id="security">
+                            <div class="settings-header">
+                                <h2>Security Settings</h2>
+                                <p>Configure system security options</p>
+                            </div>
+
+                            <form>
+                                <h5 class="mb-3">Password Policy</h5>
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="minLength" checked>
+                                    <label class="form-check-label" for="minLength">
+                                        Minimum 8 characters
+                                    </label>
+                                </div>
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="uppercase" checked>
+                                    <label class="form-check-label" for="uppercase">
+                                        Require uppercase letters
+                                    </label>
+                                </div>
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="numbers" checked>
+                                    <label class="form-check-label" for="numbers">
+                                        Require numbers
+                                    </label>
+                                </div>
+                                <div class="form-check form-switch mb-4">
+                                    <input class="form-check-input" type="checkbox" id="specialChars">
+                                    <label class="form-check-label" for="specialChars">
+                                        Require special characters
+                                    </label>
+                                </div>
+
+                                <h5 class="mb-3">Session Settings</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control" id="sessionTimeout" value="30"
+                                                placeholder="Session Timeout">
+                                            <label for="sessionTimeout">Session Timeout (minutes)</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control" id="maxLoginAttempts" value="5"
+                                                placeholder="Max Login Attempts">
+                                            <label for="maxLoginAttempts">Max Login Attempts</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-check form-switch mb-4">
+                                    <input class="form-check-input" type="checkbox" id="twoFactor" checked>
+                                    <label class="form-check-label" for="twoFactor">
+                                        Enable Two-Factor Authentication
+                                    </label>
+                                </div>
+
+                                <h5 class="mb-3">Login Restrictions</h5>
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="ipRestriction">
+                                    <label class="form-check-label" for="ipRestriction">
+                                        Restrict login by IP address
+                                    </label>
+                                </div>
+                                <div class="form-check form-switch mb-4">
+                                    <input class="form-check-input" type="checkbox" id="timeRestriction">
+                                    <label class="form-check-label" for="timeRestriction">
+                                        Restrict login by time
+                                    </label>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle"></i> Save Changes
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Notifications Settings -->
+                        <div class="settings-section" id="notifications">
+                            <div class="settings-header">
+                                <h2>Notification Settings</h2>
+                                <p>Configure system notifications</p>
+                            </div>
+
+                            <form>
+                                <h5 class="mb-3">Email Notifications</h5>
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="emailOrders" checked>
+                                    <label class="form-check-label" for="emailOrders">
+                                        New orders
+                                    </label>
+                                </div>
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="emailPayments" checked>
+                                    <label class="form-check-label" for="emailPayments">
+                                        Payment received
+                                    </label>
+                                </div>
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="emailLowStock" checked>
+                                    <label class="form-check-label" for="emailLowStock">
+                                        Low stock alerts
+                                    </label>
+                                </div>
+                                <div class="form-check form-switch mb-4">
+                                    <input class="form-check-input" type="checkbox" id="emailReports">
+                                    <label class="form-check-label" for="emailReports">
+                                        Weekly reports
+                                    </label>
+                                </div>
+
+                                <h5 class="mb-3">SMS Notifications</h5>
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="smsCritical" checked>
+                                    <label class="form-check-label" for="smsCritical">
+                                        Critical alerts only
+                                    </label>
+                                </div>
+                                <div class="form-check form-switch mb-4">
+                                    <input class="form-check-input" type="checkbox" id="smsAll">
+                                    <label class="form-check-label" for="smsAll">
+                                        All notifications
+                                    </label>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="notificationEmail"
+                                            value="notifications@fruitsbag.com" placeholder="Notification Email">
+                                        <label for="notificationEmail">Notification Email</label>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle"></i> Save Changes
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Integrations Settings -->
+                        <div class="settings-section" id="integrations">
+                            <div class="settings-header">
+                                <h2>Integrations</h2>
+                                <p>Configure third-party integrations</p>
+                            </div>
+
+                            <form>
+                                <h5 class="mb-3">Payment Gateways</h5>
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="stripe">
+                                    <label class="form-check-label" for="stripe">
+                                        Stripe
+                                    </label>
+                                </div>
+                                <div class="form-check form-switch mb-4">
+                                    <input class="form-check-input" type="checkbox" id="paypal" checked>
+                                    <label class="form-check-label" for="paypal">
+                                        PayPal
+                                    </label>
+                                </div>
+
+                                <h5 class="mb-3">Shipping Services</h5>
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" id="dhl" checked>
+                                    <label class="form-check-label" for="dhl">
+                                        DHL
+                                    </label>
+                                </div>
+                                <div class="form-check form-switch mb-4">
+                                    <input class="form-check-input" type="checkbox" id="fedex">
+                                    <label class="form-check-label" for="fedex">
+                                        FedEx
+                                    </label>
+                                </div>
+
+                                <h5 class="mb-3">API Configuration</h5>
+                                <div class="mb-3">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="apiKey" value="sk_test_123456789"
+                                            placeholder="API Key">
+                                        <label for="apiKey">API Key</label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="webhookUrl"
+                                            value="https://fruitsbag.com/webhook" placeholder="Webhook URL">
+                                        <label for="webhookUrl">Webhook URL</label>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle"></i> Save Changes
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Backup Settings -->
+                        <div class="settings-section" id="backup">
+                            <div class="settings-header">
+                                <h2>Backup Settings</h2>
+                                <p>Configure system backup options</p>
+                            </div>
+
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="backupFrequency">
+                                                <option selected>Daily</option>
+                                                <option>Weekly</option>
+                                                <option>Monthly</option>
+                                            </select>
+                                            <label for="backupFrequency">Backup Frequency</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="time" class="form-control" id="backupTime" value="02:00"
+                                                placeholder="Backup Time">
+                                            <label for="backupTime">Backup Time</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="backupLocation">
+                                            <option selected>Local Server</option>
+                                            <option>Amazon S3</option>
+                                            <option>Google Drive</option>
+                                            <option>FTP</option>
+                                        </select>
+                                        <label for="backupLocation">Backup Location</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control" id="retentionDays" value="30"
+                                                placeholder="Retention Days">
+                                            <label for="retentionDays">Retention (days)</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-floating">
+                                            <input type="number" class="form-control" id="maxBackups" value="10"
+                                                placeholder="Max Backups">
+                                            <label for="maxBackups">Max Backups</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="encryptBackup" checked>
+                                    <label class="form-check-label" for="encryptBackup">
+                                        Encrypt backups
+                                    </label>
+                                </div>
+
+                                <div class="form-check form-switch mb-4">
+                                    <input class="form-check-input" type="checkbox" id="emailBackup">
+                                    <label class="form-check-label" for="emailBackup">
+                                        Email backup notification
+                                    </label>
+                                </div>
+
+                                <div class="d-flex gap-2">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="bi bi-check-circle"></i> Save Changes
+                                    </button>
+                                    <button type="button" class="btn btn-success">
+                                        <i class="bi bi-cloud-arrow-up"></i> Backup Now
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="newUserName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="newUserName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="newUserEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="newUserEmail">
+                        </div>
+                        <div class="mb-3">
+                            <label for="newUserRole" class="form-label">Role</label>
+                            <select class="form-select" id="newUserRole">
+                                <option>Admin</option>
+                                <option>Accountant</option>
+                                <option>Manager</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newUserPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="newUserPassword">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Add User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div class="modal fade" id="editUserModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="editUserName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="editUserName" value="John Doe">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="editUserEmail" value="john@fruitsbag.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editUserRole" class="form-label">Role</label>
+                            <select class="form-select" id="editUserRole">
+                                <option selected>Admin</option>
+                                <option>Accountant</option>
+                                <option>Manager</option>
+                            </select>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="editUserStatus" checked>
+                            <label class="form-check-label" for="editUserStatus">
+                                Active
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/script.js"></script>
+
+    <script>
+        // Settings page navigation
+        document.addEventListener('DOMContentLoaded', function () {
+            const settingsOptions = document.querySelectorAll('.settings-option');
+            const settingsSections = document.querySelectorAll('.settings-section');
+
+            settingsOptions.forEach(option => {
+                option.addEventListener('click', function () {
+                    const targetSection = this.getAttribute('data-section');
+
+                    // Remove active class from all options and sections
+                    settingsOptions.forEach(opt => opt.classList.remove('active'));
+                    settingsSections.forEach(sec => sec.classList.remove('active'));
+
+                    // Add active class to clicked option
+                    this.classList.add('active');
+
+                    // Show corresponding section
+                    const targetElement = document.getElementById(targetSection);
+                    if (targetElement) {
+                        targetElement.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

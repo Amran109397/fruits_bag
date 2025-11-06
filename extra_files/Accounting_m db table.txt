@@ -1,0 +1,372 @@
+// Core Accounting Tables
+Table users {
+  id integer [primary key]
+  name varchar
+  email varchar [unique]
+  password varchar
+  role enum('admin', 'accountant', 'manager')
+  created_at timestamp
+}
+
+Table chart_of_accounts {
+  id integer [primary key]
+  code varchar [unique]
+  name varchar
+  type enum('asset', 'liability', 'equity', 'revenue', 'expense')
+  normal_balance enum('debit', 'credit')
+  parent_id integer
+}
+
+Table journal_entries {
+  id integer [primary key]
+  date date
+  description text
+  created_by integer
+  created_at timestamp
+}
+
+Table journal_entry_items {
+  id integer [primary key]
+  journal_entry_id integer
+  account_id integer
+  debit decimal
+  credit decimal
+  description text
+}
+
+// Accounts Receivable
+Table customers {
+  id integer [primary key]
+  name varchar
+  email varchar
+  phone varchar
+  address text
+}
+
+Table invoices {
+  id integer [primary key]
+  invoice_number varchar [unique]
+  date date
+  due_date date
+  customer_id integer
+  total_amount decimal
+  status enum('draft', 'sent', 'paid', 'overdue')
+  created_by integer
+}
+
+Table invoice_items {
+  id integer [primary key]
+  invoice_id integer
+  account_id integer
+  description text
+  quantity decimal
+  unit_price decimal
+  amount decimal
+}
+
+Table payments_received {
+  id integer [primary key]
+  payment_number varchar [unique]
+  date date
+  customer_id integer
+  amount decimal
+  method enum('cash', 'bank', 'mobile')
+  reference varchar
+  created_by integer
+}
+
+Table payment_allocations {
+  id integer [primary key]
+  payment_id integer
+  invoice_id integer
+  amount_applied decimal
+}
+
+// Accounts Payable
+Table vendors {
+  id integer [primary key]
+  name varchar
+  email varchar
+  phone varchar
+  address text
+}
+
+Table bills {
+  id integer [primary key]
+  bill_number varchar [unique]
+  date date
+  due_date date
+  vendor_id integer
+  total_amount decimal
+  status enum('draft', 'received', 'paid', 'overdue')
+  created_by integer
+}
+
+Table bill_items {
+  id integer [primary key]
+  bill_id integer
+  account_id integer
+  description text
+  quantity decimal
+  unit_price decimal
+  amount decimal
+}
+
+Table payments_made {
+  id integer [primary key]
+  payment_number varchar [unique]
+  date date
+  vendor_id integer
+  amount decimal
+  method enum('cash', 'bank', 'mobile')
+  reference varchar
+  created_by integer
+}
+
+Table bill_payment_allocations {
+  id integer [primary key]
+  payment_id integer
+  bill_id integer
+  amount_applied decimal
+}
+
+// Tax Management
+Table tax_rates {
+  id integer [primary key]
+  name varchar
+  rate decimal
+  type enum('vat', 'income_tax', 'withholding')
+  effective_from date
+  effective_to date
+}
+
+Table tax_items {
+  id integer [primary key]
+  tax_rate_id integer
+  invoice_id integer
+  bill_id integer
+  amount decimal
+}
+
+// Bank Reconciliation
+Table bank_accounts {
+  id integer [primary key]
+  account_name varchar
+  account_number varchar
+  bank_name varchar
+  current_balance decimal
+}
+
+Table bank_transactions {
+  id integer [primary key]
+  bank_account_id integer
+  transaction_date date
+  description text
+  amount decimal
+  type enum('deposit', 'withdrawal')
+  is_reconciled boolean [default: false]
+}
+
+Table bank_reconciliations {
+  id integer [primary key]
+  bank_account_id integer
+  reconciliation_date date
+  statement_balance decimal
+  system_balance decimal
+  difference decimal
+}
+
+// Fixed Assets
+Table fixed_assets {
+  id integer [primary key]
+  asset_name varchar
+  description text
+  purchase_date date
+  purchase_cost decimal
+  salvage_value decimal
+  useful_life_years integer
+  depreciation_method enum('straight_line', 'reducing_balance')
+  current_value decimal
+}
+
+Table asset_depreciations {
+  id integer [primary key]
+  fixed_asset_id integer
+  depreciation_date date
+  amount decimal
+  accumulated_depreciation decimal
+}
+
+// Budgeting
+Table budgets {
+  id integer [primary key]
+  account_id integer
+  fiscal_year integer
+  budget_amount decimal
+  period enum('monthly', 'quarterly')
+}
+
+Table budget_vs_actual {
+  id integer [primary key]
+  budget_id integer
+  period_start date
+  period_end date
+  actual_amount decimal
+  variance decimal
+}
+
+// Document Management
+Table documents {
+  id integer [primary key]
+  file_name varchar
+  file_path varchar
+  mime_type varchar
+  uploaded_at timestamp
+  uploaded_by integer
+}
+
+Table document_links {
+  id integer [primary key]
+  document_id integer
+  linkable_type enum('invoice', 'bill', 'payment')
+  linkable_id integer
+}
+
+// Audit & Security
+Table audit_logs {
+  id integer [primary key]
+  user_id integer
+  action enum('create', 'update', 'delete')
+  model_name varchar
+  model_id integer
+  old_values text
+  new_values text
+  created_at timestamp
+  ip_address varchar
+}
+
+// Custom Fields
+Table custom_fields {
+  id integer [primary key]
+  field_name varchar
+  field_type enum('text', 'number', 'date')
+  applies_to enum('invoice', 'bill', 'customer')
+}
+
+Table custom_field_values {
+  id integer [primary key]
+  custom_field_id integer
+  record_id integer
+  value text
+}
+
+// Notifications
+Table notifications {
+  id integer [primary key]
+  title varchar
+  message text
+  type enum('payment_due', 'bill_overdue')
+  created_at timestamp
+}
+
+Table notification_recipients {
+  id integer [primary key]
+  notification_id integer
+  user_id integer
+  is_read boolean [default: false]
+  read_at timestamp
+}
+
+// Cash Management
+Table cash_registers {
+  id integer [primary key]
+  name varchar
+  opening_balance decimal
+  current_balance decimal
+  assigned_to integer
+  closing_date date
+}
+
+Table cash_transactions {
+  id integer [primary key]
+  cash_register_id integer
+  type enum('cash_in', 'cash_out')
+  amount decimal
+  description text
+  created_at timestamp
+}
+
+// Fiscal Management
+Table fiscal_years {
+  id integer [primary key]
+  name varchar
+  start_date date
+  end_date date
+  is_locked boolean [default: false]
+}
+
+Table accounting_periods {
+  id integer [primary key]
+  fiscal_year_id integer
+  name varchar
+  start_date date
+  end_date date
+  is_closed boolean [default: false]
+}
+
+// Relationships - শুধু এখানে একবার ডিফাইন করুন
+Ref: journal_entries.created_by > users.id
+Ref: invoices.created_by > users.id
+Ref: bills.created_by > users.id
+Ref: payments_received.created_by > users.id
+Ref: payments_made.created_by > users.id
+Ref: documents.uploaded_by > users.id
+Ref: audit_logs.user_id > users.id
+Ref: notification_recipients.user_id > users.id
+Ref: cash_registers.assigned_to > users.id
+
+Ref: journal_entry_items.account_id > chart_of_accounts.id
+Ref: invoice_items.account_id > chart_of_accounts.id
+Ref: bill_items.account_id > chart_of_accounts.id
+Ref: budgets.account_id > chart_of_accounts.id
+
+Ref: chart_of_accounts.parent_id > chart_of_accounts.id
+
+Ref: journal_entry_items.journal_entry_id > journal_entries.id
+
+Ref: invoices.customer_id > customers.id
+Ref: payments_received.customer_id > customers.id
+
+Ref: invoice_items.invoice_id > invoices.id
+Ref: payment_allocations.invoice_id > invoices.id
+Ref: tax_items.invoice_id > invoices.id
+
+Ref: payment_allocations.payment_id > payments_received.id
+
+Ref: bills.vendor_id > vendors.id
+Ref: payments_made.vendor_id > vendors.id
+
+Ref: bill_items.bill_id > bills.id
+Ref: bill_payment_allocations.bill_id > bills.id
+Ref: tax_items.bill_id > bills.id
+
+Ref: bill_payment_allocations.payment_id > payments_made.id
+
+Ref: tax_items.tax_rate_id > tax_rates.id
+
+Ref: bank_transactions.bank_account_id > bank_accounts.id
+Ref: bank_reconciliations.bank_account_id > bank_accounts.id
+
+Ref: asset_depreciations.fixed_asset_id > fixed_assets.id
+
+Ref: budget_vs_actual.budget_id > budgets.id
+
+Ref: document_links.document_id > documents.id
+
+Ref: custom_field_values.custom_field_id > custom_fields.id
+
+Ref: notification_recipients.notification_id > notifications.id
+
+Ref: cash_transactions.cash_register_id > cash_registers.id
+
+Ref: accounting_periods.fiscal_year_id > fiscal_years.id
