@@ -8,8 +8,8 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('payments_made', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('vendor_id')->index(); // no FK
-            $table->bigInteger('bill_id')->nullable()->index(); // no FK
+            $table->bigInteger('vendor_id')->index(); 
+            $table->bigInteger('bill_id')->nullable()->index(); 
             $table->decimal('amount', 15, 2);
             $table->enum('status', ['draft','posted'])->default('posted')->index();
             $table->timestamps();

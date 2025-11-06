@@ -8,15 +8,14 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('invoice_id')->index(); // no FK
+            $table->bigInteger('invoice_id')->index(); 
             $table->string('description');
             $table->decimal('qty', 10, 2);
             $table->decimal('unit_price', 15, 2);
             $table->decimal('tax_amount', 15, 2)->default(0);
             $table->decimal('line_total_excl_tax', 15, 2);
             $table->timestamps();
-
-            $table->index(['invoice_id']);
+            
         });
     }
     public function down(): void { Schema::dropIfExists('invoice_items'); }

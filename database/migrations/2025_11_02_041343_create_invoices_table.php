@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('customer_id')->index(); // no FK
+            $table->bigInteger('customer_id')->index(); 
             $table->string('invoice_number')->unique();
             $table->date('date');
             $table->date('due_date')->nullable();

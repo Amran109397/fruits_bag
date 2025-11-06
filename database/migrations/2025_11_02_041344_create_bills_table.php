@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('vendor_id')->index(); // no FK
+            $table->bigInteger('vendor_id')->index(); 
             $table->string('bill_number')->unique();
             $table->date('date');
             $table->date('due_date')->nullable();
@@ -16,7 +16,6 @@ return new class extends Migration {
             $table->enum('status', ['draft','posted'])->default('draft');
             $table->timestamp('posted_at')->nullable();
             $table->timestamps();
-
             $table->index(['status','posted_at']);
         });
     }
