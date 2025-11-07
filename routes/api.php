@@ -9,9 +9,10 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\ReportController;
-
-    
-
+use App\Http\Controllers\ChartOfAccountsController;
+use App\Http\Controllers\JournalEntryController;
+use App\Http\Controllers\FiscalYearController;  
+use App\Http\Controllers\AccountingPeriodController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -53,6 +54,7 @@ Route::post('bank/accounts', [BankController::class, 'accountsStore']);
 Route::put('bank/accounts/{id}', [BankController::class, 'accountsUpdate']);
 Route::delete('bank/accounts/{id}', [BankController::class, 'accountsDelete']);
 
+
 Route::get('bank/transactions', [BankController::class, 'transactionsIndex']);
 Route::post('bank/transactions', [BankController::class, 'transactionsStore']);
 Route::put('bank/transactions/{id}', [BankController::class, 'transactionsUpdate']);
@@ -61,3 +63,13 @@ Route::delete('bank/transactions/{id}', [BankController::class, 'transactionsDel
 // Reports
 Route::get('reports/ar-aging', [ReportController::class, 'arAging']);
 Route::get('reports/ap-aging', [ReportController::class, 'apAging']);
+
+
+// Chart of Accounts
+Route::apiResource('chart-of-accounts', ChartOfAccountsController::class);
+
+// Journal Entries
+Route::apiResource('journal-entries', JournalEntryController::class);
+
+Route::apiResource('fiscal-years', FiscalYearController::class);
+Route::apiResource('accounting-periods', AccountingPeriodController::class);

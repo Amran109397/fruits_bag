@@ -11,8 +11,9 @@ class BankAccount extends Model
 
     protected $fillable = [
         'name',
-        'number',
+        'account_number',
         'bank_name',
+        'current_balance',
     ];
 
     public function transactions()

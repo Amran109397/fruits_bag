@@ -6,43 +6,35 @@ use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
-    // Accounts Receivable Aging
+    // Accounts Receivable Aging (Customer-based)
     public function arAging()
     {
         $data = DB::table('invoices')
-            ->leftJoin('payments_received', 'invoices.id', '=', 'payments_received.invoice_id')
+            ->join('customers', 'invoices.customer_id', '=', 'customers.id')
             ->select(
-                'invoices.id',
-                'invoices.invoice_number',
-                'invoices.date',
-                'invoices.due_date',
-                'invoices.total',
-                DB::raw('COALESCE(SUM(payments_received.amount),0) as paid'),
-                DB::raw('(invoices.total - COALESCE(SUM(payments_received.amount),0)) as balance')
+                'customers.name',
+                DB::raw('SUM(CASE WHEN DATEDIFF(NOW(), invoices.due_date) <= 30 THEN invoices.total ELSE 0 END) as due_0_30'),
+                DB::raw('SUM(CASE WHEN DATEDIFF(NOW(), invoices.due_date) BETWEEN 31 AND 60 THEN invoices.total ELSE 0 END) as due_31_60'),
+                DB::raw('SUM(CASE WHEN DATEDIFF(NOW(), invoices.due_date) > 60 THEN invoices.total ELSE 0 END) as due_over_60')
             )
-            ->groupBy('invoices.id','invoices.invoice_number','invoices.date','invoices.due_date','invoices.total')
-            ->havingRaw('(invoices.total - COALESCE(SUM(payments_received.amount),0)) > 0')
+            ->groupBy('customers.name')
             ->get();
 
         return response()->json($data);
     }
 
-    // Accounts Payable Aging
+    // Accounts Payable Aging (Vendor-based)
     public function apAging()
     {
         $data = DB::table('bills')
-            ->leftJoin('payments_made', 'bills.id', '=', 'payments_made.bill_id')
+            ->join('vendors', 'bills.vendor_id', '=', 'vendors.id')
             ->select(
-                'bills.id',
-                'bills.bill_number',
-                'bills.date',
-                'bills.due_date',
-                'bills.total',
-                DB::raw('COALESCE(SUM(payments_made.amount),0) as paid'),
-                DB::raw('(bills.total - COALESCE(SUM(payments_made.amount),0)) as balance')
+                'vendors.name',
+                DB::raw('SUM(CASE WHEN DATEDIFF(NOW(), bills.due_date) <= 30 THEN bills.total ELSE 0 END) as due_0_30'),
+                DB::raw('SUM(CASE WHEN DATEDIFF(NOW(), bills.due_date) BETWEEN 31 AND 60 THEN bills.total ELSE 0 END) as due_31_60'),
+                DB::raw('SUM(CASE WHEN DATEDIFF(NOW(), bills.due_date) > 60 THEN bills.total ELSE 0 END) as due_over_60')
             )
-            ->groupBy('bills.id','bills.bill_number','bills.date','bills.due_date','bills.total')
-            ->havingRaw('(bills.total - COALESCE(SUM(payments_made.amount),0)) > 0')
+            ->groupBy('vendors.name')
             ->get();
 
         return response()->json($data);

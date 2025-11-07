@@ -11,20 +11,15 @@ class BankTransaction extends Model
 
     protected $fillable = [
         'bank_account_id',
-        'date',
+        'transaction_date',
         'description',
         'amount',
-        'reference',
-        'reconciled_at',
+        'type',
+        'is_reconciled',
     ];
 
-    protected $casts = [
-        'date' => 'date',
-        'reconciled_at' => 'datetime',
-    ];
-
-    public function account()
+    public function bankAccount()
     {
-        return $this->belongsTo(BankAccount::class, 'bank_account_id');
+        return $this->belongsTo(BankAccount::class);
     }
 }
