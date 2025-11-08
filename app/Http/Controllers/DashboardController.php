@@ -2,22 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    /**
+     * 📊 Dashboard Summary API
+     * Returns overall totals for Sales, Purchases, Bank, Receivable, Payable, etc.
+     */
     public function summary()
-{
-    return response()->json([
-        'total_sales' => DB::table('invoices')->sum('total'),
-        'total_purchases' => DB::table('bills')->sum('total'),
-        'bank_balance' => DB::table('bank_accounts')->sum('current_balance'),
-        'ar_due' => DB::table('invoices')->where('status', 'unpaid')->sum('total'),
-        'ap_due' => DB::table('bills')->where('status', 'unpaid')->sum('total'),
-        'total_customers' => DB::table('customers')->count(),
-        'total_vendors' => DB::table('vendors')->count(),
-    ]);
-}
+    {
+        // ---- SALES & PURCHASE TOTALS ----
+        $totalSales = DB::table('invoices')->sum('total');
+        $totalPurchases = DB::table('bills')->sum('total');
 
+        // ---- BANK BALANCE ----
+        $bankBalance = DB::table('bank_accounts')->sum('current_balance');
+
+        // ---- ACCOUNTS RECEIVABLE (Unpaid Customer Invoices) ----
+        $receivableDue = DB::table('invoices')
+            ->whereRaw('(total - paid_amount) > 0')
+            ->sum(DB::raw('(total - paid_amount)'));
+
+        // ---- ACCOUNTS PAYABLE (Unpaid Vendor Bills) ----
+        $payableDue = DB::table('bills')
+            ->whereRaw('(total - paid_amount) > 0')
+            ->sum(DB::raw('(total - paid_amount)'));
+
+        // ---- TOTAL CUSTOMERS & VENDORS ----
+        $totalCustomers = DB::table('customers')->count();
+        $totalVendors = DB::table('vendors')->count();
+
+        // ---- OPTIONAL: JOURNAL BALANCE (if needed) ----
+        $journalCount = DB::table('journal_entries')->count();
+
+        // ---- RESPONSE ----
+        return response()->json([
+            'total_sales' => round($totalSales, 2),
+            'total_purchases' => round($totalPurchases, 2),
+            'bank_balance' => round($bankBalance, 2),
+            'ar_due' => round($receivableDue, 2),
+            'ap_due' => round($payableDue, 2),
+            'total_customers' => $totalCustomers,
+            'total_vendors' => $totalVendors,
+            'journal_entries' => $journalCount,
+        ]);
+    }
 }
