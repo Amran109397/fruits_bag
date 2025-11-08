@@ -9,8 +9,13 @@ class PaymentReceived extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_id','invoice_id','amount','status'];
+ 
+    protected $table = 'payments_received';
 
-    public function customer() { return $this->belongsTo(Customer::class); }
-    public function invoice() { return $this->belongsTo(Invoice::class); }
+    protected $fillable = [
+        'invoice_id',
+        'customer_id',
+        'amount',
+        'date',
+    ];
 }

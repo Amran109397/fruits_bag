@@ -34,19 +34,31 @@ Route::apiResource('customers', CustomerController::class);
 Route::apiResource('vendors', VendorController::class);
 
 // Dashboard
+
+Route::get('dashboard', [DashboardController::class, 'summary']);
 Route::get('dashboard/summary', [DashboardController::class, 'summary']);
 
+
 // Sales
-Route::get('sales/invoices', [SalesController::class, 'index']);
-Route::post('sales/invoices', [SalesController::class, 'store']);
-Route::post('sales/invoices/{id}/post', [SalesController::class, 'post']);
-Route::post('sales/receipts', [SalesController::class, 'receive']);
+    Route::prefix('sales')->group(function () {
+    Route::get('/invoices', [SalesController::class, 'index']);
+    Route::post('/invoices', [SalesController::class, 'store']);
+    Route::post('/invoices/{id}/post', [SalesController::class, 'post']);
+    Route::post('/invoices/{id}/unpost', [SalesController::class, 'unpost']);
+    Route::post('/receipts', [SalesController::class, 'receivePayment']); 
+});
 
 // Purchase
-Route::get('purchase/bills', [PurchaseController::class, 'index']);
-Route::post('purchase/bills', [PurchaseController::class, 'store']);
 Route::post('purchase/bills/{id}/post', [PurchaseController::class, 'post']);
+Route::apiResource('purchase/bills', PurchaseController::class);
+Route::post('purchase/bills/{id}/unpost', [PurchaseController::class, 'unpost']);
+Route::post('purchase/bills/{id}/unpay', [PurchaseController::class, 'unpay']);
 Route::post('purchase/payments', [PurchaseController::class, 'pay']);
+
+
+
+
+
 
 // Bank
 Route::get('bank/accounts', [BankController::class, 'accountsIndex']);
@@ -68,8 +80,11 @@ Route::get('reports/ap-aging', [ReportController::class, 'apAging']);
 // Chart of Accounts
 Route::apiResource('chart-of-accounts', ChartOfAccountsController::class);
 
-// Journal Entries
-Route::apiResource('journal-entries', JournalEntryController::class);
+// Journal Entries (Core Accounting)
+Route::get('journal-entries', [JournalEntryController::class, 'index']);
+Route::post('journal-entries', [JournalEntryController::class, 'store']);
+Route::post('journal-entries/{id}/post', [JournalEntryController::class, 'post']);
+Route::post('journal-entries/{id}/unpost', [JournalEntryController::class, 'unpost']);
 
 Route::apiResource('fiscal-years', FiscalYearController::class);
 Route::apiResource('accounting-periods', AccountingPeriodController::class);

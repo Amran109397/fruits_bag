@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->decimal('qty', 10, 2);
             $table->decimal('unit_price', 15, 2);
             $table->decimal('tax_amount', 15, 2)->default(0);
-            $table->decimal('line_total_excl_tax', 15, 2);
+            $table->decimal('line_total_excl_tax', 15, 2)->default(0);
             $table->timestamps();
             
         });

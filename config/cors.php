@@ -31,4 +31,7 @@ return [
 
     'supports_credentials' => true,
 
+    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'allowed_origins' => ['http://localhost:8080'], // Vue port
+
 ];
